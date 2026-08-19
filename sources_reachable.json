@@ -1,0 +1,32 @@
+{
+  "note": "全网可达源配置（2026-08-18 实测）：GitHub 搜索 API 可达、B站网页搜索可达；抖音需登录 Cookie（仅 get_video 可用）；V2EX/Exa 受沙箱/账号限制。本配置驱动 ingest_reachable.py 把公开中医内容灌入 corpus.db。",
+  "github": {
+    "enabled": true,
+    "per_keyword_repos": 3,
+    "keywords": [
+      {"kw": "倪海厦", "category": "倪海厦人纪"},
+      {"kw": "伤寒论", "category": "中医经典"},
+      {"kw": "黄帝内经", "category": "中医经典"},
+      {"kw": "针灸", "category": "针灸"},
+      {"kw": "中医方剂", "category": "方剂"},
+      {"kw": "本草纲目", "category": "中药"}
+    ]
+  },
+  "bilibili": {
+    "enabled": true,
+    "per_keyword_videos": 10,
+    "with_desc": true,
+    "keywords": ["倪海厦", "中医", "针灸", "伤寒论", "黄帝内经"]
+  },
+  "douyin": {
+    "enabled": false,
+    "note": "设为 true 且提供 cookie 后，对下面关键词做登录态搜索。get_video(分享链接) 不受此开关影响，可随时单独调用。",
+    "cookie": "",
+    "keywords": ["倪海厦", "中医养生", "针灸"]
+  },
+  "rss": {
+    "enabled": false,
+    "note": "暂未配置可达的中医 RSS 源（已知中医站点在本沙箱被挡）。可在可联网环境补充 feeds 列表。",
+    "feeds": []
+  }
+}
