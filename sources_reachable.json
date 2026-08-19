@@ -1,22 +1,52 @@
 {
-  "note": "全网可达源配置（2026-08-18 实测）：GitHub 搜索 API 可达、B站网页搜索可达；抖音需登录 Cookie（仅 get_video 可用）；V2EX/Exa 受沙箱/账号限制。本配置驱动 ingest_reachable.py 把公开中医内容灌入 corpus.db。",
+  "note": "全网可达源配置（2026-08-19 扩源实测）：GitHub 搜索 API、B站网页搜索、阮一峰 RSS/直连网页 在本沙箱可达；抖音需登录 Cookie；V2EX/Exa 受沙箱/账号限制；中医世家/维基/百度百科/39.net 等中医门户被挡或为 JS 壳抽不出正文，不可作种子。驱动 ingest_reachable.py 把公开内容灌入 corpus.db。GitHub 可用 GITHUB_TOKEN 环境变量提额（60→5000/hr）。",
   "github": {
     "enabled": true,
-    "per_keyword_repos": 3,
+    "per_keyword_repos": 4,
     "keywords": [
       {"kw": "倪海厦", "category": "倪海厦人纪"},
       {"kw": "伤寒论", "category": "中医经典"},
       {"kw": "黄帝内经", "category": "中医经典"},
       {"kw": "针灸", "category": "针灸"},
       {"kw": "中医方剂", "category": "方剂"},
-      {"kw": "本草纲目", "category": "中药"}
+      {"kw": "本草纲目", "category": "中药"},
+      {"kw": "中医养生", "category": "养生"},
+      {"kw": "中药学", "category": "中药"},
+      {"kw": "经络", "category": "经络腧穴"},
+      {"kw": "推拿", "category": "推拿"},
+      {"kw": "拔罐", "category": "拔罐"},
+      {"kw": "艾灸", "category": "艾灸"},
+      {"kw": "四气五味", "category": "中药药性"},
+      {"kw": "方剂学", "category": "方剂"},
+      {"kw": "温病条辨", "category": "中医经典"},
+      {"kw": "金匮要略", "category": "中医经典"},
+      {"kw": "神农本草经", "category": "中药"},
+      {"kw": "脉诊", "category": "诊断"},
+      {"kw": "舌诊", "category": "诊断"},
+      {"kw": "体质辨识", "category": "体质"},
+      {"kw": "中医基础理论", "category": "中医基础"},
+      {"kw": "中医诊断学", "category": "诊断"}
     ]
   },
   "bilibili": {
     "enabled": true,
-    "per_keyword_videos": 10,
+    "per_keyword_videos": 12,
     "with_desc": true,
-    "keywords": ["倪海厦", "中医", "针灸", "伤寒论", "黄帝内经"]
+    "keywords": ["倪海厦", "中医", "针灸", "伤寒论", "黄帝内经", "中医养生", "经络", "推拿", "艾灸", "拔罐", "中药", "方剂", "舌诊", "脉诊"]
+  },
+  "rss": {
+    "enabled": true,
+    "category": "互联网/通用-阮一峰",
+    "per_feed": 8,
+    "note": "本沙箱仅阮一峰 atom 可达（通用技术随笔，非中医内容，仅演示 RSS 通道可用性）。",
+    "feeds": ["https://www.ruanyifeng.com/blog/atom.xml"]
+  },
+  "web": {
+    "enabled": true,
+    "note": "直连网页分支演示：仅放可达且能抽出正文的站点。中医门户多为 JS 壳抽不出正文，故暂只放阮一峰主页作代表。",
+    "seeds": [
+      {"name": "阮一峰的网络日志", "url": "https://www.ruanyifeng.com/blog/", "category": "互联网/通用-阮一峰", "source": "ruanyifeng"}
+    ]
   },
   "douyin": {
     "enabled": false,
@@ -24,9 +54,36 @@
     "cookie": "",
     "keywords": ["倪海厦", "中医养生", "针灸"]
   },
-  "rss": {
+  "exa": {
     "enabled": false,
-    "note": "暂未配置可达的中医 RSS 源（已知中医站点在本沙箱被挡）。可在可联网环境补充 feeds 列表。",
-    "feeds": []
+    "note": "全网语义搜索（Exa）。设 enabled=true 并 export EXA_API_KEY=xxx 后运行 python ingest_reachable.py --exa。use_neural=true 走语义相近检索。",
+    "use_neural": false,
+    "max_results": 10,
+    "queries": [
+      {"q": "中医 食疗 脾胃调理", "category": "食疗养生"},
+      {"q": "针灸 经络 临床应用", "category": "针灸"},
+      {"q": "伤寒论 经方 医案", "category": "经方医案"},
+      {"q": "中医 体质辨识 九种体质", "category": "体质"},
+      {"q": "中药 四气五味 归经", "category": "中药药性"}
+    ]
+  },
+  "v2ex": {
+    "enabled": false,
+    "note": "V2EX 社区。设 enabled=true 并 export V2EX_PROXY=http://ip:port（或 HTTPS_PROXY）后运行 --v2ex。本沙箱直连被挡，代理必填。",
+    "hot": true,
+    "limit": 10,
+    "with_replies": 5,
+    "category": "V2EX社区",
+    "node_names": ["health", "food", "nutrition", "fitness"]
+  },
+  "cookie_channels": {
+    "enabled": false,
+    "note": "8 个登录态频道。把各频道 cookie 填到对应项、enabled=true 后运行 --cookie。Reddit 免登录可用（cookie 留空）。Twitter/FB/IG/LinkedIn 纯 cookie 抓取极难，框架暂占位未实现。cookie 仅运行时使用不落盘。",
+    "channels": [
+      {"channel": "reddit", "target": "tcm", "cookie": "", "category": "Reddit-TCM", "enabled": true},
+      {"channel": "xueqiu", "target": "中医养生", "cookie": "", "category": "雪球-中医", "enabled": false},
+      {"channel": "xiaohongshu", "target": "中医养生", "cookie": "", "category": "小红书-中医", "enabled": false},
+      {"channel": "xiaoyuzhou", "target": "中医", "cookie": "", "category": "小宇宙-中医播客", "enabled": false}
+    ]
   }
 }
