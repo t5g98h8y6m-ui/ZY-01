@@ -55,16 +55,19 @@
     "keywords": ["倪海厦", "中医养生", "针灸"]
   },
   "exa": {
-    "enabled": false,
-    "note": "全网语义搜索（Exa）。设 enabled=true 并 export EXA_API_KEY=xxx 后运行 python ingest_reachable.py --exa。use_neural=true 走语义相近检索。",
-    "use_neural": false,
+    "enabled": true,
+    "note": "全网语义搜索（Exa）。设 enabled=true 并 export EXA_API_KEY=xxx 后运行 python ingest_reachable.py --exa。use_neural=true 走语义相近检索。KEY 已验证可用（2026-08-20，Outlook 国际邮箱注册）。",
+    "use_neural": true,
     "max_results": 10,
     "queries": [
       {"q": "中医 食疗 脾胃调理", "category": "食疗养生"},
       {"q": "针灸 经络 临床应用", "category": "针灸"},
       {"q": "伤寒论 经方 医案", "category": "经方医案"},
       {"q": "中医 体质辨识 九种体质", "category": "体质"},
-      {"q": "中药 四气五味 归经", "category": "中药药性"}
+      {"q": "中药 四气五味 归经", "category": "中药药性"},
+      {"q": "倪海厦 人纪 中医", "category": "倪海厦人纪"},
+      {"q": "黄帝内经 素问 解读", "category": "中医经典"},
+      {"q": "中医 诊断学 脉诊 舌诊", "category": "中医诊断"}
     ]
   },
   "v2ex": {
