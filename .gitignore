@@ -11,6 +11,10 @@ __pycache__/
 _probe_*
 *.zip
 
+# 本地凭证文件（绝不入库；仅同步脚本临时读取，用完即删）
+.ghtoken
+body_tmp.json
+
 # 本仓库只同步「可达源爬取能力」，排除无关应用代码
 api_server.py
 batch_video.py
