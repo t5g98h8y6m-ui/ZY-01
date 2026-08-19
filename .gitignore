@@ -1,6 +1,24 @@
-# gitignore template for LangChain products, e.g., LangGraph, LangSmith
-# website: https://www.langchain.com/
-# website: https://www.langchain.com/langgraph
+# 大型二进制数据库（不入库，语料以 export/*.jsonl 同步）
+corpus.db
+*.db
+profile.db
 
-# LangGraph
-.langgraph_api/
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 临时探针与压缩包
+_probe_*
+*.zip
+
+# 本仓库只同步「可达源爬取能力」，排除无关应用代码
+api_server.py
+batch_video.py
+crawler.py
+extract.py
+ingest_local.py
+profile_store.py
+query_cli.py
+analysis_results/
+models/
+# 注意：db.py 被 ingest_reachable.py 依赖，必须入库（不要排除）
